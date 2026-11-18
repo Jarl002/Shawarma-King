@@ -42,6 +42,7 @@ export default function CartView() {
         })}
       </ul>
       <p className={styles.total} aria-live="polite">I alt <strong>{total} kr.</strong></p>
+      <Link className={menuStyles.cartSummary} href="/kasse">Til kassen</Link>
     </>
   );
 }

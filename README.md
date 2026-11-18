@@ -70,3 +70,14 @@ bestilles separat fra menuen.
 Menuens Se bestilling-link åbner `/kurv`. Kurvvisningen læser de samme varer
 som menuens kurvtal. Plus og minus ændrer antallet på den valgte linje. Ved
 nul fjernes linjen, og totalen beregnes igen ud fra de tilbageværende varer.
+
+## Kassen
+
+Kurvens Til kassen-link åbner `/kasse`. Kassen bruger kurvens priser og antal
+og regner gebyrerne i øre, så decimalbeløbet kan lægges præcist til.
+Afhentning viser tre tidsvalg. Levering viser et adressefelt. Gebyrerne er fra
+Figma, og et eventuelt leveringsgebyr indgår endnu ikke.
+
+Browseren tjekker de obligatoriske felter før indsendelse. Formularen viser
+derefter en lokal demobesked. Den sender ingen kontaktdata og opkræver ingen
+betaling. Ventetidsskærmen bliver koblet på i sit eget trin.
