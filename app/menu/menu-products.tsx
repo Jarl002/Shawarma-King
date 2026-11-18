@@ -48,9 +48,9 @@ export default function MenuProducts() {
           </li>
         ))}
       </ul>
-      <p className={styles.cartSummary} aria-live="polite">
-        <span>Din bestilling · {count}</span><span>{total} kr.</span>
-      </p>
+      <Link href="/kurv" className={styles.cartSummary}>
+        <span aria-live="polite">Se bestilling · {count}</span><span>{total} kr.</span>
+      </Link>
     </>
   );
 }

@@ -195,3 +195,7 @@
   color: #160704;
   font-weight: 750;
 }
+
+.cartSummary {
+  text-decoration: none;
+}

@@ -10,7 +10,7 @@ export type CartItem = {
   quantity: number;
 };
 
-function itemKey(item: CartItem) {
+export function itemKey(item: CartItem) {
   return JSON.stringify([item.productId, item.choices, item.unitPrice]);
 }
 
@@ -28,10 +28,22 @@ function useCartState() {
     });
   }
 
+  function changeQuantity(key: string, delta: number) {
+    setItems((current) => current
+      .map((line) => itemKey(line) === key
+        ? { ...line, quantity: line.quantity + delta }
+        : line)
+      .filter((line) => line.quantity > 0));
+  }
+
+  function clearCart() {
+    setItems([]);
+  }
+
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
   const total = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
 
-  return { items, count, total, addItem };
+  return { items, count, total, addItem, changeQuantity, clearCart };
 }
 
 const CartContext = createContext<ReturnType<typeof useCartState> | null>(null);

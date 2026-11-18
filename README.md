@@ -64,3 +64,9 @@ Afkrydsningen for pommes og drik åbner drikkevalget i vareformularen, så prote
 fyld og antal bevares. Menutilvalget lægger 80 kr. oven i stykprisen fra Figma.
 Valglisten genbruger drikkene fra kataloget. Deres enkeltpriser gælder, når de
 bestilles separat fra menuen.
+
+## Kurvvisning
+
+Menuens Se bestilling-link åbner `/kurv`. Kurvvisningen læser de samme varer
+som menuens kurvtal. Plus og minus ændrer antallet på den valgte linje. Ved
+nul fjernes linjen, og totalen beregnes igen ud fra de tilbageværende varer.
