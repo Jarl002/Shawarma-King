@@ -1,0 +1,19 @@
+.content { padding: 12px 20px 24px; }
+.content h1 { margin: 12px 0; font-size: 1.625rem; }
+.hero { width: 100%; height: auto; aspect-ratio: 2.6 / 1; object-fit: cover; border-radius: 20px; }
+.form { display: grid; gap: 18px; }
+.options { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+.options legend { margin-bottom: 8px; font-weight: 700; }
+.options label { position: relative; }
+.options input { position: absolute; opacity: 0; }
+.options span { display: inline-block; padding: 8px 13px; border: 1px solid; border-radius: 999px; cursor: pointer; }
+.options input:checked + span { background: var(--accent); color: #160704; border-color: var(--accent); }
+.options input:focus-visible + span { outline: 2px solid var(--foreground); outline-offset: 3px; }
+.extra { display: flex; align-items: center; gap: 8px; padding: 14px; background: #2c0b09; border-radius: 14px; cursor: pointer; }
+.extra span { margin-inline-start: auto; color: var(--accent); }
+.extra input { accent-color: var(--accent); }
+.actions { display: flex; gap: 10px; }
+.quantity { display: flex; align-items: center; gap: 4px; border-radius: 999px; background: #411513; }
+.quantity button { min-width: 40px; min-height: 48px; background: transparent; color: inherit; border: 0; border-radius: 999px; cursor: pointer; }
+.quantity button:disabled { opacity: .5; cursor: default; }
+.add { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 18px; background: var(--accent); color: #160704; border: 0; border-radius: 999px; font-weight: 750; cursor: pointer; }

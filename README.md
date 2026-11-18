@@ -43,5 +43,17 @@ overskrift og banner renderes på serveren. `menu-products.tsx` bruger
 Filteret vælger, hvilke retter der vises fra `products.ts`, og `aria-pressed`
 fortæller hjælpemidler, hvilket filter der er aktivt.
 
-Menukortene bruger eksemplerne fra Figma. Plusknapperne bliver aktive, når
-varetilpasningen er på plads, og kurvknappen vises, når der er varer i kurven.
+Menukortene linker til deres produktside med Next.js Link.
+
+## Varevalg og den fælles kurv
+
+Next.js bruger produktets id i `/menu/[productId]` til at finde varen i kataloget.
+Alle varekort åbner denne rute, og udvalget omfatter også snacks, dip og drikke.
+Kataloget tager udgangspunkt i [restaurantens Wolt-menu](https://wolt.com/da/dnk/aarhus/restaurant/shawarma-king-immervad) og Figma.
+
+Formularen holder de aktuelle valg og antal i React-state. Prisen på knappen
+beregnes fra de aktuelle valg ved hver rendering. Når kunden trykker Tilføj,
+gemmes varen i `CartProvider` i det fælles layout, og `router.push` går tilbage
+til menuen. Layoutet beholder kurven ved navigation mellem siderne. Identiske
+varer lægges på samme linje, og antal og total beregnes direkte fra kurvens varer.
+En genindlæsning starter en ny kurv i denne version.
