@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -6,9 +7,9 @@ export default function Home() {
     <div className={styles.landing}>
       <header className={styles.header}>
         <span className={styles.brand}>Shawarma King</span>
-        <button className={styles.orderButton} type="button" disabled lang="en">
+        <Link className={styles.orderButton} href="/menu" lang="en">
           Order now
-        </button>
+        </Link>
         <details className={styles.navigation}>
           <summary aria-label="Navigation">
             <span aria-hidden="true" />
@@ -39,9 +40,9 @@ export default function Home() {
           From slow-grilled, juicy shawarma to freshly baked pita and Turkish
           bread – every meal is prepared with care and flavor in focus.
         </p>
-        <button className={styles.orderButton} type="button" disabled lang="en">
+        <Link className={styles.orderButton} href="/menu" lang="en">
           Order now
-        </button>
+        </Link>
       </main>
 
       <footer className={styles.footer} id="om-projektet">

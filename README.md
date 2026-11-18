@@ -32,5 +32,16 @@ Figma-skærm 10 (loading) og 11 (bestilling klar) bruger projektets originale GI
 virkning til komponenterne, hvor de importeres. Hamburgerikonet åbner en lille
 navigation med HTML-elementet `details`, som browseren selv kan åbne og lukke.
 
-De to bestillingsknapper bliver til links til menuen i næste trin. Fotoet i
+De to bestillingslinks bruger Next.js-komponenten `Link` til at åbne `/menu`. Fotoet i
 `public/shawarma-pita.webp` er midlertidigt og kan erstattes med Figma-eksporten.
+
+## Menuen
+
+`app/menu/page.tsx` bliver til ruten `/menu` i Next.js App Router. Sidens
+overskrift og banner renderes på serveren. `menu-products.tsx` bruger
+`"use client"`, fordi filterknapperne opdaterer React-state i browseren.
+Filteret vælger, hvilke retter der vises fra `products.ts`, og `aria-pressed`
+fortæller hjælpemidler, hvilket filter der er aktivt.
+
+Menukortene bruger eksemplerne fra Figma. Plusknapperne bliver aktive, når
+varetilpasningen er på plads, og kurvknappen vises, når der er varer i kurven.
