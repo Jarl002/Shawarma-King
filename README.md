@@ -57,3 +57,10 @@ gemmes varen i `CartProvider` i det fælles layout, og `router.push` går tilbag
 til menuen. Layoutet beholder kurven ved navigation mellem siderne. Identiske
 varer lægges på samme linje, og antal og total beregnes direkte fra kurvens varer.
 En genindlæsning starter en ny kurv i denne version.
+
+## Tilbehør
+
+Afkrydsningen for pommes og drik åbner drikkevalget i vareformularen, så protein,
+fyld og antal bevares. Menutilvalget lægger 80 kr. oven i stykprisen fra Figma.
+Valglisten genbruger drikkene fra kataloget. Deres enkeltpriser gælder, når de
+bestilles separat fra menuen.

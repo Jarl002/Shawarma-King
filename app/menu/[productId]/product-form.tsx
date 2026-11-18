@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "../../cart";
-import { getProduct, ingredients, proteins } from "../products";
+import { drinks, getProduct, ingredients, proteins } from "../products";
 import styles from "./product.module.css";
 
 type Product = NonNullable<ReturnType<typeof getProduct>>;
@@ -15,13 +15,17 @@ export default function ProductForm({ product }: { product: Product }) {
   const [excluded, setExcluded] = useState<(typeof ingredients)[number][]>([]);
   const [extraProtein, setExtraProtein] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const unitPrice = product.price + (extraProtein ? 39 : 0);
+  const [withCombo, setWithCombo] = useState(false);
+  const [drinkId, setDrinkId] = useState<(typeof drinks)[number]["id"]>("cola");
+  const selectedDrink = drinks.find((drink) => drink.id === drinkId);
+  const unitPrice = product.price + (extraProtein ? 39 : 0) + (withCombo ? 80 : 0);
 
   function addToCart() {
     const choices = product.customizable
       ? [protein, ...ingredients.filter((item) => excluded.includes(item)).map((item) => `uden ${item.toLowerCase()}`)]
       : [];
     if (extraProtein) choices.push("Ekstra protein");
+    if (withCombo && selectedDrink) choices.push(`Pommes og ${selectedDrink.name}`);
 
     addItem({ productId: product.id, name: product.name, choices, unitPrice, quantity });
     router.push("/menu");
@@ -59,6 +63,21 @@ export default function ProductForm({ product }: { product: Product }) {
             <input type="checkbox" checked={extraProtein} onChange={(event) => setExtraProtein(event.target.checked)} />
             Ekstra protein <span>+39 kr.</span>
           </label>
+          <label className={styles.extra}>
+            <input type="checkbox" checked={withCombo} onChange={(event) => setWithCombo(event.target.checked)} />
+            Med pommes og sodavand <span>+80 kr.</span>
+          </label>
+          {withCombo && (
+            <fieldset className={styles.options}>
+              <legend>Vælg drik</legend>
+              {drinks.map((drink) => (
+                <label key={drink.id}>
+                  <input type="radio" name="drink" checked={drinkId === drink.id} onChange={() => setDrinkId(drink.id)} />
+                  <span>{drink.name}</span>
+                </label>
+              ))}
+            </fieldset>
+          )}
         </>
       )}
       <div className={styles.actions}>
