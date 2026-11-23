@@ -3,12 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "../../cart";
-import { defaultIngredients, defaultSauces, drinks, getProduct, ingredients, proteins, sauces } from "../products";
+import type { Product } from "../data";
+import { defaultIngredients, defaultSauces, ingredients, proteins, sauces } from "../options";
 import styles from "./product.module.css";
 
-type Product = NonNullable<ReturnType<typeof getProduct>>;
-
-export default function ProductForm({ product }: { product: Product }) {
+export default function ProductForm({ product, drinks }: { product: Product; drinks: Product[] }) {
   const router = useRouter();
   const { addItem } = useCart();
   const [protein, setProtein] = useState<(typeof proteins)[number]>("Kylling");
@@ -17,7 +16,7 @@ export default function ProductForm({ product }: { product: Product }) {
   const [extraProtein, setExtraProtein] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [withCombo, setWithCombo] = useState(false);
-  const [drinkId, setDrinkId] = useState<(typeof drinks)[number]["id"]>("cola");
+  const [drinkId, setDrinkId] = useState(drinks[0]?.id);
   const selectedDrink = drinks.find((drink) => drink.id === drinkId);
   const unitPrice = product.price + (extraProtein ? 39 : 0) + (withCombo ? 80 : 0);
 
@@ -89,7 +88,7 @@ export default function ProductForm({ product }: { product: Product }) {
             <input type="checkbox" checked={withCombo} onChange={(event) => setWithCombo(event.target.checked)} />
             Med pommes og sodavand <span>+80 kr.</span>
           </label>
-          {withCombo && (
+          {withCombo && drinks.length > 0 && (
             <fieldset className={styles.options}>
               <legend>Vælg drik</legend>
               {drinks.map((drink) => (

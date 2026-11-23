@@ -3,17 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { catalog, products } from "./products";
+import type { Product } from "./data";
 import { useCart } from "../cart";
 import styles from "./menu.module.css";
 
-const filters = ["Mest bestilt", "Durum", "Kebabmix", "Alle", ...new Set(catalog.map(({ category }) => category).filter((category) => category !== "Durum" && category !== "Kebabmix"))];
-
-export default function MenuProducts() {
+export default function MenuProducts({ catalog }: { catalog: Product[] }) {
+  const filters = ["Mest bestilt", "Durum", "Kebabmix", "Alle", ...new Set(catalog.map(({ category }) => category).filter((category) => category !== "Durum" && category !== "Kebabmix"))];
   const [filter, setFilter] = useState("Mest bestilt");
   const { count, total } = useCart();
   const visibleProducts = filter === "Mest bestilt"
-    ? catalog.slice(0, products.length)
+    ? catalog.filter((product) => product.featured)
     : catalog.filter((product) => filter === "Alle" || product.category === filter);
 
   return (
@@ -30,6 +29,11 @@ export default function MenuProducts() {
           </button>
         ))}
       </div>
+      {visibleProducts.length === 0 && (
+        <p className={styles.empty} role="status">
+          {catalog.length === 0 ? "Menuen er tom lige nu. Prøv igen om lidt." : "Der er ingen retter i denne kategori lige nu."}
+        </p>
+      )}
       <ul className={styles.products}>
         {visibleProducts.map((product) => (
           <li className={styles.card} key={product.id}>
