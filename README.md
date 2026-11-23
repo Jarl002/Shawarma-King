@@ -107,3 +107,15 @@ Ventetidssiden har et tydeligt demo-link til `/bestilling-klar`. Dermed kan
 færdigskærmen afprøves uden køkkenintegration. Den viser samme ordrenummer
 og afhentningsform som den gemte bestilling. En ny fane eller genindlæsning
 har stadig ingen bestilling, da data endnu kun ligger i React-state.
+
+## Grøntsager og sauce
+
+Vareformularen genbruges til rulle, pita, tyrkisk brød og kebabmix.
+Grøntsager og saucer kan vælges uafhængigt, inklusive både chili og hvidløg.
+Jalapeños, chili, hvidløg og dressing er nævnt på restaurantens Wolt-menu.
+De nye tilvalg starter fravalgt, mens standardgrøntsagerne og cremefraiche
+starter valgt. Tilvalgene har ingen merpris i denne prototype.
+
+Kurven gemmer de valgte ingredienser og saucer i katalogets faste rækkefølge.
+Dermed får to ens valg samme kurvelinje, uanset hvilken rækkefølge kunden
+trykkede i. Udeladte standardgrøntsager og fravalg af al sauce vises også.

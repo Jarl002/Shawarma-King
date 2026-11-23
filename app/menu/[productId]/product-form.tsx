@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "../../cart";
-import { drinks, getProduct, ingredients, proteins } from "../products";
+import { defaultIngredients, defaultSauces, drinks, getProduct, ingredients, proteins, sauces } from "../products";
 import styles from "./product.module.css";
 
 type Product = NonNullable<ReturnType<typeof getProduct>>;
@@ -12,7 +12,8 @@ export default function ProductForm({ product }: { product: Product }) {
   const router = useRouter();
   const { addItem } = useCart();
   const [protein, setProtein] = useState<(typeof proteins)[number]>("Kylling");
-  const [excluded, setExcluded] = useState<(typeof ingredients)[number][]>([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<readonly (typeof ingredients)[number][]>(defaultIngredients);
+  const [selectedSauces, setSelectedSauces] = useState<readonly (typeof sauces)[number][]>(defaultSauces);
   const [extraProtein, setExtraProtein] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [withCombo, setWithCombo] = useState(false);
@@ -22,7 +23,13 @@ export default function ProductForm({ product }: { product: Product }) {
 
   function addToCart() {
     const choices = product.customizable
-      ? [protein, ...ingredients.filter((item) => excluded.includes(item)).map((item) => `uden ${item.toLowerCase()}`)]
+      ? [
+        protein,
+        ...ingredients.filter((item) => selectedIngredients.includes(item)),
+        ...ingredients.filter((item) => defaultIngredients.includes(item) && !selectedIngredients.includes(item)).map((item) => `uden ${item.toLowerCase()}`),
+        ...sauces.filter((item) => selectedSauces.includes(item)),
+        ...(selectedSauces.length === 0 ? ["Uden dressing og sauce"] : []),
+      ]
       : [];
     if (extraProtein) choices.push("Ekstra protein");
     if (withCombo && selectedDrink) choices.push(`Pommes og ${selectedDrink.name}`);
@@ -45,15 +52,30 @@ export default function ProductForm({ product }: { product: Product }) {
             ))}
           </fieldset>
           <fieldset className={styles.options}>
-            <legend>Fyld</legend>
+            <legend>Grøntsager</legend>
             {ingredients.map((item) => (
               <label key={item}>
                 <input
                   type="checkbox"
-                  checked={!excluded.includes(item)}
-                  onChange={(event) => setExcluded(event.target.checked
-                    ? excluded.filter((value) => value !== item)
-                    : [...excluded, item])}
+                  checked={selectedIngredients.includes(item)}
+                  onChange={(event) => setSelectedIngredients((current) => event.target.checked
+                    ? [...current, item]
+                    : current.filter((value) => value !== item))}
+                />
+                <span>{item}</span>
+              </label>
+            ))}
+          </fieldset>
+          <fieldset className={styles.options}>
+            <legend>Dressing og sauce</legend>
+            {sauces.map((item) => (
+              <label key={item}>
+                <input
+                  type="checkbox"
+                  checked={selectedSauces.includes(item)}
+                  onChange={(event) => setSelectedSauces((current) => event.target.checked
+                    ? [...current, item]
+                    : current.filter((value) => value !== item))}
                 />
                 <span>{item}</span>
               </label>
