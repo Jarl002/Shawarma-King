@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../cart";
 import styles from "./ready.module.css";
@@ -21,7 +22,7 @@ export default function ReadyOrder() {
   return (
     <main className={styles.screen}>
       <p className={styles.brand}>Shawarma King</p>
-      <div className={styles.space} />
+      <Image className={styles.animation} src="/bestilling-kebab-40-transparent.gif" alt="Kokken serverer din mad" width={310} height={315} unoptimized />
       <h1>Din mad er klar.</h1>
       <p>Nyd den, mens den er varm.</p>
       <div className={styles.ticket}>

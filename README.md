@@ -95,3 +95,15 @@ Ventetidsskærmens interval opdaterer uret hvert sekund og ryddes med
 gennemført, fordi der endnu ikke findes en køkkenintegration. Ordrenummeret
 er tilfældigt demodata. Bestillingen ligger i hukommelsen og forsvinder ved
 genindlæsning, ligesom kurven. Kontaktfelterne sendes ikke til en server.
+
+## Loading og færdig bestilling
+
+App Router bruger `app/loading.tsx` som fallback, når en rute afventer indhold.
+Ved hurtig eller allerede hentet navigation kan loading være meget kort.
+GIF-filerne bruger Next.js Image med `unoptimized`, så browseren modtager
+den originale animation.
+
+Ventetidssiden har et tydeligt demo-link til `/bestilling-klar`. Dermed kan
+færdigskærmen afprøves uden køkkenintegration. Den viser samme ordrenummer
+og afhentningsform som den gemte bestilling. En ny fane eller genindlæsning
+har stadig ingen bestilling, da data endnu kun ligger i React-state.
