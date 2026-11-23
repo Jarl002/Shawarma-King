@@ -8,7 +8,8 @@ import { useCart } from "../cart";
 import styles from "./menu.module.css";
 
 export default function MenuProducts({ catalog }: { catalog: Product[] }) {
-  const filters = ["Mest bestilt", "Durum", "Kebabmix", "Alle", ...new Set(catalog.map(({ category }) => category).filter((category) => category !== "Durum" && category !== "Kebabmix"))];
+  // The first three match Figma (01 Menu); the rest are reached by swiping the row sideways.
+  const filters = ["Mest bestilt", "Durum", "Kebabmix", ...new Set(catalog.map(({ category }) => category).filter((category) => category !== "Durum" && category !== "Kebabmix")), "Alle"];
   const [filter, setFilter] = useState("Mest bestilt");
   const { count, total } = useCart();
   const visibleProducts = filter === "Mest bestilt"
@@ -52,7 +53,7 @@ export default function MenuProducts({ catalog }: { catalog: Product[] }) {
           </li>
         ))}
       </ul>
-      <Link href="/kurv" className={styles.cartSummary}>
+      <Link href="/kurv" className={`${styles.cartSummary} ${styles.menuCartSummary}`}>
         <span aria-live="polite">Se bestilling · {count}</span><span>{total} kr.</span>
       </Link>
     </>

@@ -14,21 +14,23 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <div className={styles.screen}>
-      <header className={styles.header}>
-        <p>Studieprojekt · ingen tilknytning til Shawarma King</p>
-        <Link href="/">Shawarma King</Link>
+      <header>
+        <p className={styles.menuNotice}>
+          <span>Studieprojekt</span> · ingen tilknytning til Shawarma King
+        </p>
+        <Link className={styles.menuBrand} href="/">Shawarma King</Link>
       </header>
 
       <main className={styles.content}>
         <Image
-          src="/shawarma-pita.webp"
+          src="/menu-hero.png"
           alt=""
-          width={1200}
-          height={900}
+          width={700}
+          height={260}
           sizes="(max-width: 460px) calc(100vw - 40px), 420px"
           className={styles.hero}
         />
-        <h1>Smagen af Mellemøsten midt i Aarhus</h1>
+        <h1 className={styles.title}>Smagen af Mellemøsten<br /> midt i Aarhus</h1>
         <p className={styles.status}>Åben · klar til afhentning om ca. 15 min</p>
         <MenuErrorBoundary title="Menuen kunne ikke hentes">
           <Suspense fallback={<MenuSkeleton />}>
