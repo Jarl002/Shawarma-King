@@ -1,12 +1,16 @@
 .landing {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
+  --order-bar-space: calc(58px + 31px + env(safe-area-inset-bottom));
+
   max-width: 460px;
   margin-inline: auto;
 }
 
+/* Topbar – stays visible while scrolling */
+
 .header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
   display: flex;
   align-items: center;
   min-height: 64px;
@@ -68,24 +72,29 @@
 
 .navigation nav {
   position: absolute;
-  z-index: 1;
-  inset-inline-end: 0;
-  padding: 12px 16px;
-  border: 1px solid currentColor;
-  border-radius: 10px;
+  inset-inline-end: 8px;
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #4f1a1a;
+  border-radius: 12px;
   background: #000;
   white-space: nowrap;
 }
 
 .navigation a {
+  padding: 10px 12px;
   color: inherit;
+  font-size: 0.875rem;
+  text-decoration: none;
 }
 
-.content {
+/* Hero – fills the first screen */
+
+.heroSection {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  padding: 26px 20px 31px;
+  padding: 26px 20px 16px;
 }
 
 .intro {
@@ -109,7 +118,7 @@
   margin-top: 27px;
 }
 
-.hero {
+.heroImage {
   display: block;
   width: 100%;
   height: auto;
@@ -121,20 +130,242 @@
 
 .description {
   max-width: 300px;
-  margin: 20px 0 48px;
+  margin: 20px 0 0;
   padding-inline: 4px;
   color: #c2ad95;
   font-size: 0.75rem;
   line-height: 17px;
 }
 
-.content > .orderButton {
-  margin-top: auto;
+/* Order now – pinned to the bottom of the screen while scrolling */
+
+.orderBar {
+  position: fixed;
+  z-index: 10;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  max-width: 460px;
+  margin-inline: auto;
+  padding: 0 20px calc(31px + env(safe-area-inset-bottom));
+  pointer-events: none;
 }
 
-.footer {
-  padding: 0 20px 14px;
-  color: #cbb7a5;
+.orderBar .orderButton {
+  flex: 1;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+  pointer-events: auto;
+}
+
+/* Shared section title */
+
+.sectionTitle {
+  margin: 0 0 24px;
+  color: #d1a23a;
+  font-size: 1.875rem;
+  line-height: 36px;
+  text-align: center;
+}
+
+/* Gallery */
+
+.gallery {
+  padding: 40px 0 28px;
+  scroll-margin-top: 64px;
+}
+
+.galleryImage {
+  display: block;
+  width: 300px;
+  height: 226px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.swipeHint {
+  margin: 17px 0 4px;
+  color: #c2ad95;
   font-size: 0.6875rem;
   text-align: center;
+}
+
+/* Reviews */
+
+.reviews {
+  padding: 38px 0 32px;
+  background: #191919;
+  scroll-margin-top: 64px;
+}
+
+.reviewCarousel {
+  --dot-off: #444;
+}
+
+.reviewCard {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  margin: 0 0 18px;
+  padding: 32px 24px 46px;
+  border-radius: 18px;
+  background: #2a0303;
+}
+
+.reviewCard blockquote {
+  flex: 1;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 22px;
+}
+
+.reviewCard figcaption {
+  padding-top: 29px;
+  border-top: 1px solid #8a7a6a;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+/* FAQ */
+
+.faq {
+  padding: 40px 20px 62px;
+  scroll-margin-top: 64px;
+}
+
+.faqList {
+  overflow: hidden;
+  border-radius: 18px;
+  background: #f8f8f6;
+  color: #1a1a1a;
+}
+
+.faqItem + .faqItem {
+  border-top: 1px solid #e2e2e0;
+}
+
+.faqItem summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 62px;
+  padding: 0 20px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary span {
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.faqItem[open] summary span {
+  transform: rotate(45deg);
+}
+
+.faqItem summary:focus-visible {
+  outline-offset: -4px;
+}
+
+.faqItem p {
+  margin: -6px 0 0;
+  padding: 0 20px 18px;
+  color: #4a4a48;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.faqItem a {
+  color: inherit;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faqItem summary span {
+    transition: none;
+  }
+}
+
+/* Footer */
+
+.footer {
+  padding: 35px 24px calc(40px + var(--order-bar-space));
+  background: #000;
+  color: #c2ad95;
+  font-size: 0.75rem;
+  line-height: 17px;
+  scroll-margin-top: 64px;
+}
+
+.footerBrand {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 21px;
+  text-transform: uppercase;
+}
+
+.footerText {
+  max-width: 270px;
+  margin: 12px 0 0;
+}
+
+.footerColumns {
+  display: grid;
+  grid-template-columns: 1fr 156px;
+  column-gap: 16px;
+  margin-top: 23px;
+}
+
+.footerColumns h2 {
+  margin: 0 0 9px;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  line-height: 17px;
+}
+
+.footer address {
+  font-style: normal;
+  line-height: 18px;
+}
+
+.footer a {
+  color: inherit;
+}
+
+.hours {
+  margin: 0;
+  line-height: 18px;
+}
+
+.hours div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hours dd {
+  margin: 0;
+}
+
+.footerMeta {
+  margin: 34px 0 0;
+  color: #8a7a6a;
+  font-size: 0.6875rem;
+}
+
+.copyright {
+  margin: 14px 0 0;
+  color: #6a5a4a;
+  font-size: 0.625rem;
+}
+
+.footerMeta + .copyright {
+  margin-top: 28px;
 }

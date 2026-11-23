@@ -1,0 +1,49 @@
+.track {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0 20px;
+  overflow-x: auto;
+  scroll-padding-inline: 20px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  list-style: none;
+  overscroll-behavior-x: contain;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+}
+
+.dot {
+  display: grid;
+  width: 14px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  place-items: center;
+}
+
+.dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dot-off, #4f1a1a);
+}
+
+.dot[aria-current="true"]::before {
+  background: #d1a23a;
+}
