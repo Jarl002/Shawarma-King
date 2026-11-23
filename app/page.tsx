@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Carousel } from "./carousel";
+import { StudyNotice } from "./study-notice";
 import styles from "./page.module.css";
 
 const gallery = [
@@ -56,24 +57,27 @@ const openingHours = [
 export default function Home() {
   return (
     <div className={styles.landing} lang="en">
-      <header className={styles.header}>
-        <span className={styles.brand}>Shawarma King</span>
-        <Link className={styles.orderButton} href="/menu">
-          Order now
-        </Link>
-        <details className={styles.navigation}>
-          <summary aria-label="Navigation">
-            <span aria-hidden="true" />
-          </summary>
-          <nav aria-label="Landingsside" lang="da">
-            <a href="#galleri">Galleri</a>
-            <a href="#anmeldelser">Anmeldelser</a>
-            <a href="#faq">FAQ</a>
-            <a href="#kontakt">Kontakt og åbningstider</a>
-            <a href="#om-projektet">Om projektet</a>
-          </nav>
-        </details>
-      </header>
+      <div className={styles.topbar}>
+        <StudyNotice />
+        <header className={styles.header}>
+          <span className={styles.brand}>Shawarma King</span>
+          <Link className={styles.orderButton} href="/menu">
+            Order now
+          </Link>
+          <details className={styles.navigation}>
+            <summary aria-label="Navigation">
+              <span aria-hidden="true" />
+            </summary>
+            <nav aria-label="Landingsside" lang="da">
+              <a href="#galleri">Galleri</a>
+              <a href="#anmeldelser">Anmeldelser</a>
+              <a href="#faq">FAQ</a>
+              <a href="#kontakt">Kontakt og åbningstider</a>
+              <a href="#om-projektet">Om projektet</a>
+            </nav>
+          </details>
+        </header>
+      </div>
 
       <main>
         <section className={styles.heroSection}>
