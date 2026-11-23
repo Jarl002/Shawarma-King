@@ -1,19 +1,381 @@
-.content { padding: 12px 20px 24px; }
-.content h1 { margin: 12px 0; font-size: 1.625rem; }
-.hero { width: 100%; height: auto; aspect-ratio: 2.6 / 1; object-fit: cover; border-radius: 20px; }
-.form { display: grid; gap: 18px; }
-.options { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
-.options legend { margin-bottom: 8px; font-weight: 700; }
-.options label { position: relative; }
-.options input { position: absolute; opacity: 0; }
-.options span { display: inline-block; padding: 8px 13px; border: 1px solid; border-radius: 999px; cursor: pointer; }
-.options input:checked + span { background: var(--accent); color: #160704; border-color: var(--accent); }
-.options input:focus-visible + span { outline: 2px solid var(--foreground); outline-offset: 3px; }
-.extra { display: flex; align-items: center; gap: 8px; padding: 14px; background: #2c0b09; border-radius: 14px; cursor: pointer; }
-.extra span { margin-inline-start: auto; color: var(--accent); }
-.extra input { accent-color: var(--accent); }
-.actions { display: flex; gap: 10px; }
-.quantity { display: flex; align-items: center; gap: 4px; border-radius: 999px; background: #411513; }
-.quantity button { min-width: 40px; min-height: 48px; background: transparent; color: inherit; border: 0; border-radius: 999px; cursor: pointer; }
-.quantity button:disabled { opacity: .5; cursor: default; }
-.add { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 18px; background: var(--accent); color: #160704; border: 0; border-radius: 999px; font-weight: 750; cursor: pointer; }
+/* 02 Vælg din mad (Figma) */
+
+.topbar {
+  position: relative;
+  display: grid;
+  min-height: 58px;
+  background: #000;
+  place-items: center;
+}
+
+.back {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 8px;
+  display: grid;
+  width: 44px;
+  place-items: center;
+  color: #f3e6d0;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.topTitle {
+  margin: 0;
+  color: #f3e6d0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.content {
+  padding: 12px 20px 28px;
+}
+
+.banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 350 / 128;
+  border-radius: 20px;
+  background: #fff;
+  object-fit: cover;
+}
+
+.form {
+  display: grid;
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.titleRow h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 29px;
+}
+
+.price {
+  margin: 0;
+  color: #f6cf45;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.summary {
+  margin: 4px 0 0;
+  color: #f6cf45;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Protein and drink choices */
+
+.group {
+  position: relative;
+  margin: 10px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.group + .group {
+  margin-top: 18px;
+}
+
+.group legend {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 7px;
+  padding: 0;
+  color: #f3e6d0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.pills,
+.fillings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill,
+.filling {
+  position: relative;
+}
+
+.pill input,
+.filling input {
+  position: absolute;
+  opacity: 0;
+}
+
+.pill span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 85px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1.2px solid #f3e6d0;
+  border-radius: 999px;
+  color: #f3e6d0;
+  cursor: pointer;
+  font-size: 0.8125rem;
+}
+
+/* "Lam" is a short pill in Figma */
+.pills > .pill:nth-child(2) span {
+  min-width: 0;
+}
+
+.pill input:checked + span {
+  background: #f6cf45;
+  color: #1a0303;
+  font-weight: 700;
+}
+
+/* Fyld */
+
+.hint {
+  color: #c2ad95;
+  font-size: 0.6875rem;
+  font-weight: 400;
+}
+
+.check {
+  margin-inline-end: 6px;
+  font-weight: 400;
+}
+
+.filling > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 35px;
+  padding: 0 16px;
+  border: 1.5px solid rgb(243 230 208 / 45%);
+  border-radius: 999px;
+  color: #c2ad95;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.filling input:checked + span {
+  border-color: #f2cf5b;
+  background: #3a0e0e;
+  color: #f3e6d0;
+  font-weight: 700;
+}
+
+.pill input:focus-visible + span,
+.filling input:focus-visible + span {
+  outline: 2px solid #f3e6d0;
+  outline-offset: 3px;
+}
+
+/* Ekstra protein and combo cards */
+
+.extra,
+.combo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1.5px solid transparent;
+  background: #2a0707;
+  color: #f3e6d0;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.extra {
+  justify-content: space-between;
+  min-height: 50px;
+  margin-top: 23px;
+  padding: 0 16px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.extraPrice {
+  color: #c2ad95;
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.extra[aria-pressed="true"] {
+  border-color: #f6cf45;
+}
+
+.extra[aria-pressed="true"] .extraPrice {
+  color: #f6cf45;
+  font-weight: 700;
+}
+
+.combo {
+  gap: 12px;
+  min-height: 84px;
+  margin: 12px 0 0;
+  padding: 0 12px 0 10px;
+  border-radius: 18px;
+}
+
+.comboImages {
+  position: relative;
+  display: block;
+  width: 76px;
+  height: 64px;
+  flex: 0 0 auto;
+}
+
+.comboImages img {
+  position: absolute;
+  inset-block-start: 0;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.comboImages img:first-child {
+  inset-inline-start: 0;
+}
+
+.comboImages img:last-child {
+  inset-inline-start: 36px;
+}
+
+.comboText {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+  font-size: 0.875rem;
+}
+
+.comboText strong {
+  white-space: nowrap;
+}
+
+.comboText span {
+  color: #f6cf45;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.switch {
+  position: relative;
+  width: 46px;
+  height: 28px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #3d0d0a;
+  transition: background-color 0.2s ease;
+}
+
+.switch::after {
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #c2ad95;
+  content: "";
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.combo[aria-checked="true"] {
+  border-color: #f6cf45;
+}
+
+.combo[aria-checked="true"] .switch {
+  background: #f6cf45;
+}
+
+.combo[aria-checked="true"] .switch::after {
+  background: #1a0303;
+  transform: translateX(18px);
+}
+
+.extra:focus-visible,
+.combo:focus-visible {
+  outline: 2px solid #f3e6d0;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch,
+  .switch::after {
+    transition: none;
+  }
+}
+
+/* Quantity and Tilføj – stay at the bottom of the screen */
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 12px 0 28px;
+  background: linear-gradient(to bottom, transparent, var(--background) 24%);
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 108px;
+  min-height: 56px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #3a0e0e;
+}
+
+.quantity button {
+  width: 44px;
+  min-height: 56px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #f3e6d0;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.quantity button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.quantity output {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.add {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 56px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: 999px;
+  background: #f6cf45;
+  color: #000;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
