@@ -29,10 +29,10 @@ export default function Home() {
         </div>
         <Image
           className={styles.hero}
-          src="/shawarma-pita.webp"
-          alt="Pitabrød med shawarma, rødkål og salat, serveret med pommes frites"
-          width={1200}
-          height={900}
+          src="/landing-shawarma-pita.png"
+          alt="Pitabrød med shawarma, rødkål, tomat og salat, serveret med pommes frites"
+          width={700}
+          height={520}
           sizes="(max-width: 460px) calc(100vw - 40px), 420px"
           preload
         />

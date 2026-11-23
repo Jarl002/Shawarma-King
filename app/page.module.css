@@ -1,4 +1,7 @@
 .landing {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
   max-width: 460px;
   margin-inline: auto;
 }
@@ -6,16 +9,15 @@
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-height: 62px;
-  padding: 8px 16px 8px 20px;
-  background: #050404;
+  min-height: 64px;
+  padding: 0 0 0 22px;
+  background: #000;
 }
 
 .brand {
   margin-inline-end: auto;
-  font-size: 1rem;
-  font-weight: 750;
+  font-size: 1.0625rem;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -24,16 +26,18 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  min-height: 56px;
+  min-height: 58px;
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #160704;
-  font-weight: 750;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .header .orderButton {
-  min-height: 36px;
+  min-width: 90px;
+  min-height: 34px;
   padding-inline: 14px;
   font-size: 0.75rem;
 }
@@ -59,7 +63,7 @@
   width: 18px;
   height: 2px;
   background: currentColor;
-  box-shadow: 0 -6px currentColor, 0 6px currentColor;
+  box-shadow: 0 -7px currentColor, 0 7px currentColor;
 }
 
 .navigation nav {
@@ -69,7 +73,7 @@
   padding: 12px 16px;
   border: 1px solid currentColor;
   border-radius: 10px;
-  background: #050404;
+  background: #000;
   white-space: nowrap;
 }
 
@@ -79,16 +83,21 @@
 
 .content {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  padding: 26px 20px 20px;
+  padding: 26px 20px 31px;
+}
+
+.intro {
+  padding-inline: 4px;
 }
 
 .intro h1,
 .tagline {
   margin: 0;
-  font-size: clamp(1.5rem, 7vw, 2rem);
-  line-height: 1.12;
-  font-weight: 750;
+  font-size: 1.75rem;
+  line-height: 1.16;
+  font-weight: 700;
 }
 
 .intro h1 {
@@ -97,25 +106,30 @@
 
 .tagline {
   max-width: 15ch;
-  margin-top: 26px;
+  margin-top: 27px;
 }
 
 .hero {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
-  margin-top: 42px;
+  aspect-ratio: 35 / 26;
+  margin-top: 46px;
   border-radius: 22px;
   object-fit: cover;
 }
 
 .description {
-  max-width: 40ch;
-  margin: 18px 0 44px;
-  color: #cbb7a5;
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  max-width: 300px;
+  margin: 20px 0 48px;
+  padding-inline: 4px;
+  color: #c2ad95;
+  font-size: 0.75rem;
+  line-height: 17px;
+}
+
+.content > .orderButton {
+  margin-top: auto;
 }
 
 .footer {
