@@ -5,12 +5,15 @@
   margin-inline: auto;
 }
 
-/* Topbar – stays visible while scrolling */
+/* Topbar (study notice + header) – stays visible while scrolling */
 
-.header {
+.topbar {
   position: sticky;
   z-index: 10;
   top: 0;
+}
+
+.header {
   display: flex;
   align-items: center;
   min-height: 64px;
@@ -89,7 +92,7 @@
   text-decoration: none;
 }
 
-/* Hero – fills the first screen */
+/* Hero */
 
 .heroSection {
   display: flex;
@@ -171,7 +174,7 @@
 
 .gallery {
   padding: 40px 0 28px;
-  scroll-margin-top: 64px;
+  scroll-margin-top: 86px;
 }
 
 .galleryImage {
@@ -194,7 +197,7 @@
 .reviews {
   padding: 38px 0 32px;
   background: #191919;
-  scroll-margin-top: 64px;
+  scroll-margin-top: 86px;
 }
 
 .reviewCarousel {
@@ -229,7 +232,7 @@
 
 .faq {
   padding: 40px 20px 62px;
-  scroll-margin-top: 64px;
+  scroll-margin-top: 86px;
 }
 
 .faqList {
@@ -300,7 +303,7 @@
   color: #c2ad95;
   font-size: 0.75rem;
   line-height: 17px;
-  scroll-margin-top: 64px;
+  scroll-margin-top: 86px;
 }
 
 .footerBrand {

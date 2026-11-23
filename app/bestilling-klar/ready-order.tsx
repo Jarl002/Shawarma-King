@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../cart";
+import { StudyNotice } from "../study-notice";
 import styles from "./ready.module.css";
 
 export default function ReadyOrder() {
@@ -11,6 +12,7 @@ export default function ReadyOrder() {
   if (!order) {
     return (
       <main className={styles.screen}>
+        <StudyNotice className={styles.notice} />
         <h1>Ingen aktiv bestilling</h1>
         <Link href="/menu">Se menuen</Link>
       </main>
@@ -21,6 +23,7 @@ export default function ReadyOrder() {
 
   return (
     <main className={styles.screen}>
+      <StudyNotice className={styles.notice} />
       <p className={styles.brand}>Shawarma King</p>
       <Image className={styles.animation} src="/bestilling-kebab-40-transparent.gif" alt="Kokken serverer din mad" width={310} height={315} unoptimized />
       <h1>Din mad er klar.</h1>

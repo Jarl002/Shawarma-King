@@ -10,3 +10,5 @@
 .link { width: 100%; margin-bottom: 16px; padding: 16px; border: 1px solid; border-radius: 999px; text-decoration: none; }
 .screen a { color: inherit; }
 .demo { margin-top: 24px; font-size: .75rem; }
+
+.notice { align-self: stretch; margin: -32px -20px 0; }
