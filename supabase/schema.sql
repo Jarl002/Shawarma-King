@@ -11,6 +11,7 @@ create table public.products (
   price        integer not null check (price >= 0),    -- whole Danish kroner
   category     text    not null,
   image        text,                                   -- path in /public, e.g. /menu/durum-rulle.webp
+  banner       text,                                   -- optional wide photo for the product page
   featured     boolean not null default false,         -- shown under "Mest bestilt"
   popular      boolean not null default false,         -- shows the "Populær" badge
   customizable boolean not null default false,         -- has protein, vegetable and sauce choices
@@ -50,3 +51,6 @@ insert into public.products (id, name, description, price, category, image, feat
   ('gazoz',          'Gazoz',                 null,                                                             30, 'Drikkevarer',    '/menu/gazoz.webp',                  false, false, false, 16),
   ('ayran',          'Ayran',                 null,                                                             25, 'Drikkevarer',    '/menu/ayran.webp',                  false, false, false, 17),
   ('servietter',     'Servietter',            null,                                                              0, 'Engangsservice', '/menu/servietter.webp',                  false, false, false, 18);
+
+-- Wide banner photo on the product page (02 Vælg din mad). Others fall back to image.
+update public.products set banner = '/menu/durum-rulle-banner.webp' where id = 'durum-rulle';

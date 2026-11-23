@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "../../cart";
@@ -37,70 +38,98 @@ export default function ProductForm({ product, drinks }: { product: Product; dri
     router.push("/menu");
   }
 
+  const fillings = [
+    ...ingredients.filter((item) => defaultIngredients.includes(item)).slice(0, 3).map((item) => ({ item, kind: "ingredient" as const })),
+    { item: "Cremefraiche" as const, kind: "sauce" as const },
+    ...ingredients.filter((item) => defaultIngredients.includes(item)).slice(3).map((item) => ({ item, kind: "ingredient" as const })),
+    ...ingredients.filter((item) => !defaultIngredients.includes(item)).map((item) => ({ item, kind: "ingredient" as const })),
+    ...sauces.filter((item) => item !== "Cremefraiche").map((item) => ({ item, kind: "sauce" as const })),
+  ];
+
+  function toggleFilling(item: string, kind: "ingredient" | "sauce") {
+    if (kind === "ingredient") {
+      const value = item as (typeof ingredients)[number];
+      setSelectedIngredients((current) => current.includes(value) ? current.filter((entry) => entry !== value) : [...current, value]);
+    } else {
+      const value = item as (typeof sauces)[number];
+      setSelectedSauces((current) => current.includes(value) ? current.filter((entry) => entry !== value) : [...current, value]);
+    }
+  }
+
   return (
     <form className={styles.form} onSubmit={(event) => { event.preventDefault(); addToCart(); }}>
+      <div className={styles.titleRow}>
+        <h1>{product.name}</h1>
+        <p className={styles.price}>{product.price} kr.</p>
+      </div>
+      {product.customizable && <p className={styles.summary} aria-live="polite">{protein}</p>}
+
       {product.customizable && (
         <>
-          <fieldset className={styles.options}>
+          <fieldset className={styles.group}>
             <legend>Protein</legend>
-            {proteins.map((item) => (
-              <label key={item}>
-                <input type="radio" name="protein" checked={protein === item} onChange={() => setProtein(item)} />
-                <span>{item}</span>
-              </label>
-            ))}
-          </fieldset>
-          <fieldset className={styles.options}>
-            <legend>Grøntsager</legend>
-            {ingredients.map((item) => (
-              <label key={item}>
-                <input
-                  type="checkbox"
-                  checked={selectedIngredients.includes(item)}
-                  onChange={(event) => setSelectedIngredients((current) => event.target.checked
-                    ? [...current, item]
-                    : current.filter((value) => value !== item))}
-                />
-                <span>{item}</span>
-              </label>
-            ))}
-          </fieldset>
-          <fieldset className={styles.options}>
-            <legend>Dressing og sauce</legend>
-            {sauces.map((item) => (
-              <label key={item}>
-                <input
-                  type="checkbox"
-                  checked={selectedSauces.includes(item)}
-                  onChange={(event) => setSelectedSauces((current) => event.target.checked
-                    ? [...current, item]
-                    : current.filter((value) => value !== item))}
-                />
-                <span>{item}</span>
-              </label>
-            ))}
-          </fieldset>
-          <label className={styles.extra}>
-            <input type="checkbox" checked={extraProtein} onChange={(event) => setExtraProtein(event.target.checked)} />
-            Ekstra protein <span>+39 kr.</span>
-          </label>
-          <label className={styles.extra}>
-            <input type="checkbox" checked={withCombo} onChange={(event) => setWithCombo(event.target.checked)} />
-            Med pommes og sodavand <span>+80 kr.</span>
-          </label>
-          {withCombo && drinks.length > 0 && (
-            <fieldset className={styles.options}>
-              <legend>Vælg drik</legend>
-              {drinks.map((drink) => (
-                <label key={drink.id}>
-                  <input type="radio" name="drink" checked={drinkId === drink.id} onChange={() => setDrinkId(drink.id)} />
-                  <span>{drink.name}</span>
+            <div className={styles.pills}>
+              {proteins.map((item) => (
+                <label key={item} className={styles.pill}>
+                  <input type="radio" name="protein" checked={protein === item} onChange={() => setProtein(item)} />
+                  <span>{item}</span>
                 </label>
               ))}
+            </div>
+          </fieldset>
+
+          <fieldset className={styles.group}>
+            <legend>
+              Fyld <span className={styles.hint}>Tryk for at fravælge</span>
+            </legend>
+            <div className={styles.fillings}>
+              {fillings.map(({ item, kind }) => {
+                const checked = kind === "ingredient"
+                  ? selectedIngredients.includes(item as (typeof ingredients)[number])
+                  : selectedSauces.includes(item as (typeof sauces)[number]);
+                return (
+                  <label key={item} className={styles.filling}>
+                    <input type="checkbox" checked={checked} onChange={() => toggleFilling(item, kind)} />
+                    <span>{checked && <span className={styles.check} aria-hidden="true">✓</span>}{item === "Cremefraiche" ? "Creme fraiche" : item}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          <button type="button" className={styles.extra} aria-pressed={extraProtein} onClick={() => setExtraProtein(!extraProtein)}>
+            <span>Ekstra protein</span>
+            <span className={styles.extraPrice}>+39 kr.</span>
+          </button>
+
+          <button type="button" role="switch" aria-checked={withCombo} className={styles.combo} onClick={() => setWithCombo(!withCombo)}>
+            <span className={styles.comboImages} aria-hidden="true">
+              <Image src="/menu/combo-pommes.webp" alt="" width={64} height={64} />
+              <Image src="/menu/combo-cola.webp" alt="" width={40} height={64} />
+            </span>
+            <span className={styles.comboText}>
+              <strong>Med pommes og sodavand</strong>
+              <span>+80 kr.</span>
+            </span>
+            <span className={styles.switch} aria-hidden="true" />
+          </button>
+
+          {withCombo && drinks.length > 0 && (
+            <fieldset className={styles.group}>
+              <legend>Vælg sodavand</legend>
+              <div className={styles.pills}>
+                {drinks.map((drink) => (
+                  <label key={drink.id} className={styles.pill}>
+                    <input type="radio" name="drink" checked={drinkId === drink.id} onChange={() => setDrinkId(drink.id)} />
+                    <span>{drink.name}</span>
+                  </label>
+                ))}
+              </div>
             </fieldset>
           )}
         </>
       )}
+
       <div className={styles.actions}>
         <div className={styles.quantity} aria-label="Antal" role="group">
           <button type="button" aria-label="Fjern én" disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)}>−</button>

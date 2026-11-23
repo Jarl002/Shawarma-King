@@ -11,12 +11,11 @@ export type Product = {
   price: number;
   category: string;
   image: string | null;
+  banner: string | null; // wide photo for the product page; falls back to image
   featured: boolean;
   popular: boolean;
   customizable: boolean;
 };
-
-const columns = "id,name,description,price,category,image,featured,popular,customizable";
 
 export async function getCatalog(): Promise<Product[]> {
   "use cache";
@@ -29,13 +28,17 @@ export async function getCatalog(): Promise<Product[]> {
     throw new Error("Supabase is not configured: set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY in .env.local");
   }
 
-  const response = await fetch(`${url}/rest/v1/products?select=${columns}&order=sort_order`, {
+  // select=* so optional columns (like banner) can be added in Supabase without breaking older deployments.
+  const response = await fetch(`${url}/rest/v1/products?select=*&order=sort_order`, {
     headers: { apikey: key, Authorization: `Bearer ${key}` },
   });
   if (!response.ok) {
     throw new Error(`Could not load the menu from Supabase (HTTP ${response.status})`);
   }
-  return response.json();
+  const rows: (Omit<Product, "banner"> & { banner?: string | null })[] = await response.json();
+  return rows.map(({ id, name, description, price, category, image, banner, featured, popular, customizable }) => ({
+    id, name, description, price, category, image, banner: banner ?? null, featured, popular, customizable,
+  }));
 }
 
 export async function getProduct(id: string) {
