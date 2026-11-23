@@ -6,6 +6,7 @@ import styles from "./layout.module.css";
 export const metadata: Metadata = {
   title: "Shawarma King Aarhus",
   description: "Studieprojekt om et digitalt købsflow.",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
