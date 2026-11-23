@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { itemKey, useCart } from "../cart";
 import styles from "./checkout.module.css";
@@ -22,9 +23,10 @@ function price(amountInOre: number) {
 }
 
 export default function CheckoutForm() {
-  const { items, total } = useCart();
+  const { items, total, placeOrder } = useCart();
+  const router = useRouter();
   const [method, setMethod] = useState<(typeof fulfillmentMethods)[number]>("Afhentning");
-  const [submitted, setSubmitted] = useState(false);
+  const [minutes, setMinutes] = useState(15);
   const pickup = method === "Afhentning";
 
   if (items.length === 0) {
@@ -42,10 +44,10 @@ export default function CheckoutForm() {
   return (
     <form
       className={styles.form}
-      onChange={() => setSubmitted(false)}
       onSubmit={(event) => {
         event.preventDefault();
-        setSubmitted(true);
+        placeOrder(method, minutes, totalInOre);
+        router.push("/ventetid");
       }}
     >
       <fieldset className={styles.options}>
@@ -63,7 +65,7 @@ export default function CheckoutForm() {
           <legend>Hvornår henter du?</legend>
           {pickupSlots.map((slot, index) => (
             <label key={slot}>
-              <input type="radio" name="pickupTime" value={slot} defaultChecked={index === 0} />
+              <input type="radio" name="pickupTime" value={slot} checked={minutes === (index + 1) * 15} onChange={() => setMinutes((index + 1) * 15)} />
               <span>{slot}</span>
             </label>
           ))}
@@ -113,7 +115,7 @@ export default function CheckoutForm() {
       <button className={styles.action} type="submit">
         Bestil <span>{price(totalInOre)}</span>
       </button>
-      {submitted && <p className={styles.notice} role="status">Demo: Der er ikke sendt en bestilling eller trukket penge.</p>}
+      <p className={styles.notice}>Studiedemo · Bestillingen simuleres lokalt.</p>
     </form>
   );
 }

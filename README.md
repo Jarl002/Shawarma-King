@@ -81,3 +81,17 @@ Figma, og et eventuelt leveringsgebyr indgår endnu ikke.
 Browseren tjekker de obligatoriske felter før indsendelse. Formularen viser
 derefter en lokal demobesked. Den sender ingen kontaktdata og opkræver ingen
 betaling. Ventetidsskærmen bliver koblet på i sit eget trin.
+
+## Ventetid
+
+Når Bestil indsendes, gemmer `placeOrder` en kopi af varerne, det samlede
+beløb, leveringsformen og det forventede tidspunkt i den fælles provider.
+Kurven tømmes, og Next.js `router.push` åbner `/ventetid`. Kunden kan åbne
+bestillingsoversigten, selv efter kurven er tømt.
+
+Tidsvalget i kassen angiver 15, 30 eller 45 minutter fra bestillingstidspunktet.
+Ventetidsskærmens interval opdaterer uret hvert sekund og ryddes med
+`clearInterval`, når komponenten forlades. Kun modtagelsen markeres som
+gennemført, fordi der endnu ikke findes en køkkenintegration. Ordrenummeret
+er tilfældigt demodata. Bestillingen ligger i hukommelsen og forsvinder ved
+genindlæsning, ligesom kurven. Kontaktfelterne sendes ikke til en server.

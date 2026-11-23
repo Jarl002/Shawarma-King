@@ -1,0 +1,100 @@
+.content {
+  padding: 20px;
+}
+
+.title {
+  margin: 0 0 18px;
+  font-size: 1.25rem;
+}
+
+.ticket {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 22px;
+  background: #2c0b09;
+}
+
+.ticket span {
+  display: block;
+  margin-bottom: 4px;
+  color: #cbb7a5;
+  font-size: .875rem;
+}
+
+.ticket strong {
+  font-size: clamp(2rem, 9vw, 3rem);
+}
+
+.ticket div:first-child strong {
+  color: var(--accent);
+}
+
+.ticket p {
+  width: 100%;
+  margin: 0;
+  color: #cbb7a5;
+  font-size: .875rem;
+}
+
+.remaining {
+  margin: 24px 0 36px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.content h2 {
+  font-size: 1.125rem;
+}
+
+.steps {
+  display: grid;
+  gap: 24px;
+  padding: 0;
+  list-style: none;
+  color: #cbb7a5;
+}
+
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.steps span {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.steps .received {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.note {
+  margin: 36px 0;
+  color: #cbb7a5;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.summary {
+  padding: 16px;
+  border: 1px solid #733831;
+  border-radius: 16px;
+}
+
+.summary summary {
+  cursor: pointer;
+}
+
+.summary li {
+  margin-bottom: 10px;
+}
+
+.summary small {
+  display: block;
+  color: #cbb7a5;
+}

@@ -10,12 +10,21 @@ export type CartItem = {
   quantity: number;
 };
 
+export type Order = {
+  number: number;
+  readyAt: number;
+  method: "Afhentning" | "Levering";
+  items: CartItem[];
+  totalInOre: number;
+};
+
 export function itemKey(item: CartItem) {
   return JSON.stringify([item.productId, item.choices, item.unitPrice]);
 }
 
 function useCartState() {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [order, setOrder] = useState<Order | null>(null);
 
   function addItem(item: CartItem) {
     setItems((current) => {
@@ -36,6 +45,18 @@ function useCartState() {
       .filter((line) => line.quantity > 0));
   }
 
+  function placeOrder(method: Order["method"], minutes: number, totalInOre: number) {
+    // Gem et øjebliksbillede, så senere kurvændringer ikke ændrer bestillingen.
+    setOrder({
+      number: Math.floor(Math.random() * 900) + 100,
+      readyAt: Date.now() + minutes * 60_000,
+      method,
+      totalInOre,
+      items: items.map((item) => ({ ...item, choices: [...item.choices] })),
+    });
+    setItems([]);
+  }
+
   function clearCart() {
     setItems([]);
   }
@@ -43,7 +64,7 @@ function useCartState() {
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
   const total = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
 
-  return { items, count, total, addItem, changeQuantity, clearCart };
+  return { items, count, total, addItem, changeQuantity, clearCart, order, placeOrder };
 }
 
 const CartContext = createContext<ReturnType<typeof useCartState> | null>(null);
