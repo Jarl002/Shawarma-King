@@ -1,0 +1,12 @@
+.screen { display: flex; flex-direction: column; align-items: center; max-width: 460px; min-height: 100svh; margin-inline: auto; padding: 32px 20px; text-align: center; }
+.brand { font-weight: 750; text-transform: uppercase; }
+.space { height: 230px; width: 100%; }
+.screen h1 { margin: 16px 0 0; font-size: 1.75rem; }
+.screen p { color: #cbb7a5; }
+.ticket { display: grid; gap: 12px; width: 100%; margin: 12px 0; padding: 24px 16px; border-radius: 22px; background: var(--accent); color: #160704; font-weight: 700; }
+.ticket strong { font-size: 3.25rem; }
+.ticket span { font-size: .875rem; }
+.thanks { margin: 24px 0; font-size: .875rem; }
+.link { width: 100%; margin-bottom: 16px; padding: 16px; border: 1px solid; border-radius: 999px; text-decoration: none; }
+.screen a { color: inherit; }
+.demo { margin-top: 24px; font-size: .75rem; }

@@ -48,6 +48,7 @@ export default function OrderStatus() {
       <p className={styles.remaining} role="timer">
         {now === null ? "Beregner ventetid…" : minutesLeft > 0 ? `ca. ${minutesLeft} minutter tilbage` : "Det forventede tidspunkt er nået"}
       </p>
+      <Link href="/bestilling-klar">Vis færdigskærmen (demo)</Link>
       <h2>Sådan laver vi din mad</h2>
       <ol className={styles.steps}>
         {steps.map((step, index) => (
