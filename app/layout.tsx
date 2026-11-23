@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "./cart";
+import styles from "./layout.module.css";
 
 export const metadata: Metadata = {
   title: "Shawarma King Aarhus",
@@ -10,7 +11,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="da">
-      <body><CartProvider>{children}</CartProvider></body>
+      <body>
+        <div className={styles.desktop}>
+          <div className={styles.device}>
+            <div className={styles.screen}>
+              <CartProvider>{children}</CartProvider>
+            </div>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

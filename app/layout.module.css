@@ -1,0 +1,46 @@
+/*
+  On a phone the app fills the screen as normal.
+  On a wider screen it is shown inside a phone-sized frame that scrolls on its own.
+*/
+
+@media (min-width: 700px) {
+  .desktop {
+    display: grid;
+    min-height: 100dvh;
+    padding: 24px;
+    background:
+      radial-gradient(circle at 50% 30%, #3a0a08 0%, transparent 60%),
+      #0c0202;
+    place-items: center;
+  }
+
+  .device {
+    /* 48px page padding + 20px frame border must fit inside the window */
+    --app-height: min(844px, calc(100dvh - 68px));
+
+    position: relative;
+    width: 390px;
+    height: var(--app-height);
+    box-sizing: content-box;
+    overflow: hidden;
+    border: 10px solid #0a0a0a;
+    border-radius: 54px;
+    background: var(--background);
+    box-shadow:
+      0 0 0 2px #2b2b2b,
+      0 40px 90px rgb(0 0 0 / 60%);
+    /* Makes position: fixed elements stay inside the phone instead of the browser window */
+    transform: translateZ(0);
+  }
+
+  .screen {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .screen::-webkit-scrollbar {
+    display: none;
+  }
+}

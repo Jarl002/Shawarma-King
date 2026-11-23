@@ -2,6 +2,7 @@
   --background: #1c0605;
   --foreground: #f5e7d2;
   --accent: #f8cf46;
+  --app-height: 100svh;
 }
 
 * {

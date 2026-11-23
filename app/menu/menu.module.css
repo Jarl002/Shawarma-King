@@ -1,6 +1,6 @@
 .screen {
   max-width: 460px;
-  min-height: 100svh;
+  min-height: var(--app-height);
   margin-inline: auto;
 }
 
