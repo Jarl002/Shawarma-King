@@ -8,9 +8,11 @@ export const metadata: Metadata = { title: "Ventetid | Shawarma King Aarhus" };
 export default function WaitingPage() {
   return (
     <div className={menuStyles.screen}>
-      <header className={menuStyles.header}>
-        <p>Studieprojekt · ingen tilknytning til Shawarma King</p>
-        <Link href="/menu">Shawarma King</Link>
+      <p className={menuStyles.menuNotice}>
+        <span>Studieprojekt</span> · ingen tilknytning til Shawarma King
+      </p>
+      <header>
+        <Link className={menuStyles.menuBrand} href="/">Shawarma King</Link>
       </header>
       <OrderStatus />
     </div>

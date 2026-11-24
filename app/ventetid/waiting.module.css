@@ -1,100 +1,141 @@
+/* 06 Ventetid (Figma) */
+
 .content {
-  padding: 20px;
+  padding: 14px 20px 28px;
 }
 
-.title {
-  margin: 0 0 18px;
-  font-size: 1.25rem;
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.ticket {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px;
+/* Status card */
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 4px;
+  min-height: 150px;
+  padding: 21px 20px 17px;
   border-radius: 22px;
-  background: #2c0b09;
+  background: #2a0707;
 }
 
-.ticket span {
+.card span {
   display: block;
-  margin-bottom: 4px;
-  color: #cbb7a5;
-  font-size: .875rem;
+  color: #c2ad95;
+  font-size: 0.8125rem;
 }
 
-.ticket strong {
-  font-size: clamp(2rem, 9vw, 3rem);
+.card strong {
+  display: block;
+  color: #f3e6d0;
+  font-size: 3.125rem;
+  line-height: 1.2;
 }
 
-.ticket div:first-child strong {
-  color: var(--accent);
+.card .time {
+  color: #f6cf45;
 }
 
-.ticket p {
-  width: 100%;
-  margin: 0;
-  color: #cbb7a5;
-  font-size: .875rem;
+.number {
+  text-align: end;
 }
 
-.remaining {
-  margin: 24px 0 36px;
-  text-align: center;
+.card p {
+  grid-column: 1 / -1;
+  margin: 6px 0 0;
+  color: #c2ad95;
+  font-size: 0.75rem;
+}
+
+.lead {
+  margin: 28px 0 0;
+  color: #f3e6d0;
+  font-size: 0.8125rem;
   font-weight: 700;
+  text-align: center;
 }
 
-.content h2 {
-  font-size: 1.125rem;
+/* Steps */
+
+.stepsTitle {
+  margin: 38px 0 0;
+  color: #f3e6d0;
+  font-size: 1.0625rem;
 }
 
 .steps {
   display: grid;
-  gap: 24px;
+  gap: 31px;
+  margin: 26px 0 0;
   padding: 0;
   list-style: none;
-  color: #cbb7a5;
 }
 
 .steps li {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  color: #c2ad95;
+  font-size: 0.875rem;
 }
 
-.steps span {
-  color: var(--accent);
-  font-size: 1.5rem;
+.steps li::before {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  border: 1.5px solid #c2ad95;
+  border-radius: 50%;
+  content: "";
 }
 
-.steps .received {
-  color: var(--foreground);
+.steps li[data-state="done"]::before,
+.steps li[data-state="current"]::before {
+  border-color: #f6cf45;
+  background: #f6cf45;
+}
+
+.steps li[data-state="current"] {
+  color: #f3e6d0;
   font-weight: 700;
 }
 
 .note {
-  margin: 36px 0;
-  color: #cbb7a5;
-  font-size: .875rem;
-  line-height: 1.5;
+  margin: 48px 0 0;
+  color: #c2ad95;
+  font-size: 0.6875rem;
 }
 
-.summary {
+.demo {
+  display: inline-block;
+  margin-top: 18px;
+  color: #c2ad95;
+  font-size: 0.75rem;
+}
+
+/* No order */
+
+.emptyCard {
+  display: grid;
+  gap: 12px;
+  min-height: 100px;
   padding: 16px;
-  border: 1px solid #733831;
-  border-radius: 16px;
+  border-radius: 20px;
+  background: #2a0707;
+  color: #f3e6d0;
+  text-decoration: none;
 }
 
-.summary summary {
-  cursor: pointer;
+.emptyCard strong {
+  font-size: 1.0625rem;
 }
 
-.summary li {
-  margin-bottom: 10px;
-}
-
-.summary small {
-  display: block;
-  color: #cbb7a5;
+.emptyCard span {
+  font-size: 0.75rem;
 }
