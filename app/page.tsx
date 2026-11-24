@@ -34,7 +34,7 @@ const faq = [
   },
   {
     question: "Do you offer delivery or takeaway?",
-    answer: "Both. When you order here, you choose pickup at Immervad 1 E or delivery at checkout.",
+    answer: "Takeaway for now. Order here and pick up at Immervad 1 E – delivery is coming soon.",
   },
   {
     question: "Where are you located?",
@@ -42,7 +42,7 @@ const faq = [
   },
   {
     question: "Which areas do you deliver to?",
-    answer: "We deliver in Aarhus. Enter your address at checkout to see if we deliver to you.",
+    answer: "We don't deliver yet. When delivery launches, it will cover Aarhus.",
   },
 ];
 
