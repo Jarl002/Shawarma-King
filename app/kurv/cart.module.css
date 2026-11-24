@@ -1,38 +1,411 @@
+/* 04 Din bestilling (Figma) */
+
+.topbar {
+  position: relative;
+  display: grid;
+  min-height: 58px;
+  background: #000;
+  place-items: center;
+}
+
+.topbar h1 {
+  margin: 0;
+  color: #f3e6d0;
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+.back {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 8px;
+  display: grid;
+  width: 44px;
+  place-items: center;
+  color: #f3e6d0;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.reset {
+  position: absolute;
+  inset-block: 7px;
+  inset-inline-end: 14px;
+  min-width: 76px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f6cf45;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.reset:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(var(--app-height) - 78px);
+  padding: 12px 20px 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.card {
+  border-radius: 18px;
+  background: #2a0707;
+  color: #f3e6d0;
+}
+
+/* Empty cart */
+
+.emptyCard {
+  display: grid;
+  gap: 12px;
+  min-height: 100px;
+  padding: 16px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.emptyCard strong {
+  font-size: 1.0625rem;
+}
+
+.emptyCard span {
+  font-size: 0.75rem;
+}
+
+/* Cart lines */
+
+.lines {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .line {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) auto;
+  grid-template-areas:
+    "image info info"
+    "image price stepper";
+  column-gap: 14px;
+  row-gap: 8px;
+  padding: 12px;
+  border-radius: 20px;
+}
+
+.line[data-image="false"] {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "info info"
+    "price stepper";
+}
+
+.lineImage {
+  position: relative;
+  grid-area: image;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.lineImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lineInfo {
+  grid-area: info;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.lineInfo h2 {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.lineInfo p {
+  margin: 6px 0 0;
+  color: #c2ad95;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.linePrice {
+  grid-area: price;
+  align-self: center;
+  color: #f6cf45;
+  font-size: 0.875rem;
+}
+
+.lineStepper {
+  grid-area: stepper;
+  width: 120px;
+}
+
+/* Bestik and Besked til køkkenet */
+
+.option {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px;
-  border-radius: 18px;
-  background: #2c0b09;
+  width: 100%;
+  min-height: 66px;
+  padding: 0 16px;
+  border: 0;
+  background: #2a0707;
+  color: #f3e6d0;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
 }
 
-.line h2 { margin: 0; font-size: 1rem; }
-.line p { margin: 4px 0; color: #cbb7a5; font-size: 0.8125rem; }
-.line strong, .reset { color: var(--accent); }
+.optionText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
 
-.quantity {
+.optionText strong {
+  font-size: 0.875rem;
+  line-height: 22px;
+}
+
+.optionText span {
+  color: #c2ad95;
+  font-size: 0.75rem;
+  line-height: 18px;
+}
+
+.noteStatus {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.optionAction {
+  display: grid;
+  width: 44px;
+  flex: 0 0 auto;
+  color: #f6cf45;
+  font-size: 1.125rem;
+  font-weight: 700;
+  place-items: center;
+}
+
+.optionActionText {
+  flex: 0 0 auto;
+  color: #f6cf45;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.option[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1.5px #f6cf45;
+}
+
+.noteCard {
+  overflow: hidden;
+}
+
+.noteCard .option {
+  min-height: 64px;
+}
+
+.noteField {
+  display: block;
+  padding: 0 16px 16px;
+}
+
+.noteField textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #4f1a1a;
+  border-radius: 12px;
+  background: #1a0303;
+  color: #f3e6d0;
+  font: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+}
+
+.noteField textarea:focus-visible {
+  border-color: #f6cf45;
+  outline: none;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.option:focus-visible {
+  outline: 2px solid #f3e6d0;
+  outline-offset: -4px;
+}
+
+/* Passer godt til */
+
+.suggestionsTitle {
+  margin: 0 0 12px;
+  color: #f3e6d0;
+  font-size: 1.0625rem;
+  line-height: 24px;
+}
+
+.suggestions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6px;
+}
+
+.suggestion {
+  display: grid;
+  padding: 8px;
+  border-radius: 18px;
+  background: #2a0707;
+}
+
+.suggestionImage {
+  position: relative;
+  height: 76px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.suggestionImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.suggestion h3 {
+  margin: 7px 4px 0;
+  color: #f3e6d0;
+  font-size: 0.75rem;
+  line-height: 18px;
+}
+
+.suggestion p {
+  margin: 2px 4px 0;
+  color: #f6cf45;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.suggestionStepper {
+  margin-top: 5px;
+}
+
+/* − 0 + */
+
+.stepper {
   display: flex;
   align-items: center;
-  border-radius: 999px;
-  background: #411513;
+  justify-content: space-between;
+  height: 40px;
+  border-radius: 20px;
+  background: #3a0e0e;
 }
 
-.quantity button, .reset {
-  min-width: 44px;
-  min-height: 44px;
+.stepper button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: 20px;
   background: transparent;
-  color: inherit;
+  color: #f3e6d0;
   cursor: pointer;
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
-.reset { color: var(--accent); }
+.stepper .plus {
+  color: #f6cf45;
+}
+
+.stepper button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.stepper output {
+  color: #f3e6d0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* I alt and Til kassen – stay at the bottom */
+
+.checkout {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 24px 0 28px;
+  background: linear-gradient(to bottom, transparent, #1a0303 18%);
+}
 
 .total {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  margin-top: 20px;
+  margin: 0;
+}
+
+.total span {
+  color: #c2ad95;
+  font-size: 0.875rem;
+}
+
+.total strong {
+  color: #f3e6d0;
+  font-size: 1.25rem;
+}
+
+.vat {
+  margin: 10px 0 18px;
+  color: #c2ad95;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.checkoutButton {
+  display: grid;
+  min-height: 66px;
+  border-radius: 999px;
+  background: #f6cf45;
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: 700;
+  place-items: center;
+  text-decoration: none;
+}
+
+.checkoutButton[aria-disabled="true"] {
+  opacity: 0.45;
 }
