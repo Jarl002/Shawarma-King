@@ -1,0 +1,128 @@
+/* 07 Notifikation (Figma) */
+
+.lock {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  max-width: 460px;
+  margin-inline: auto;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  animation: fade-in 0.3s ease-out both;
+}
+
+.background {
+  object-fit: cover;
+  opacity: 0.45; /* the same as Figma's black layer at 55 % */
+}
+
+.dismiss {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.time,
+.date {
+  position: relative;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.time {
+  padding-top: 36px;
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.date {
+  margin-top: 6px;
+  font-size: 0.9375rem;
+}
+
+/* Notification card */
+
+.notification {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  grid-template-areas:
+    "icon app when"
+    "icon title title"
+    "icon details details";
+  column-gap: 14px;
+  margin: 37px 16px 0;
+  padding: 16px 16px 7px 14px;
+  border-radius: 22px;
+  background: rgb(43 36 36 / 92%);
+  color: #fff;
+  text-decoration: none;
+  animation: slide-down 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both;
+}
+
+.notification:focus-visible {
+  outline: 2px solid #f6cf45;
+  outline-offset: 3px;
+}
+
+.icon {
+  display: grid;
+  grid-area: icon;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #1c0303;
+  color: #f6cf45;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  place-items: center;
+}
+
+.app {
+  grid-area: app;
+  color: #c2ad95;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.when {
+  grid-area: when;
+  color: #c2ad95;
+  font-size: 0.6875rem;
+}
+
+.title {
+  grid-area: title;
+  margin-top: 8px;
+  font-size: 0.9375rem;
+}
+
+.details {
+  grid-area: details;
+  margin: 8px 0 7px;
+  color: #ddd;
+  font-size: 0.75rem;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lock,
+  .notification {
+    animation: none;
+  }
+}

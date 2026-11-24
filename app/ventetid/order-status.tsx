@@ -1,20 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCart } from "../cart";
+import LockScreen, { clock } from "./lock-screen";
 import styles from "./waiting.module.css";
 
 const steps = ["Bestilling modtaget", "Din mad laves nu", "Klar ved disken"];
 
-function clock(time: number) {
-  const date = new Date(time);
-  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-}
-
 export default function OrderStatus() {
   const { order } = useCart();
   const [now, setNow] = useState<number | null>(null);
+  const [showLock, setShowLock] = useState(false);
+  const closeLock = useCallback(() => setShowLock(false), []);
 
   useEffect(() => {
     const update = () => setNow(Date.now());
@@ -22,6 +20,13 @@ export default function OrderStatus() {
     const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
   }, []);
+
+  // Prototype behaviour from Figma: the "your food is ready" notification appears after 5 seconds.
+  useEffect(() => {
+    if (!order) return;
+    const timer = window.setTimeout(() => setShowLock(true), 5000);
+    return () => window.clearTimeout(timer);
+  }, [order]);
 
   if (!order) {
     return (
@@ -65,7 +70,10 @@ export default function OrderStatus() {
       </ol>
 
       <p className={styles.note}>Tiden er et estimat. Vi giver besked, når maden er klar.</p>
-      <Link className={styles.demo} href="/bestilling-klar">Vis færdigskærmen (demo)</Link>
+
+      {showLock && now !== null && (
+        <LockScreen now={now} orderNumber={order.number} pickupBy={clock(order.readyAt + 20 * 60_000)} onClose={closeLock} />
+      )}
     </main>
   );
 }
