@@ -9,12 +9,16 @@ export const metadata: Metadata = { title: "Til kassen | Shawarma King Aarhus" }
 export default function CheckoutPage() {
   return (
     <div className={menuStyles.screen}>
-      <header className={menuStyles.header}>
-        <p>Studieprojekt · ingen tilknytning til Shawarma King</p>
-        <Link href="/kurv">← Tilbage til kurven</Link>
+      <p className={menuStyles.menuNotice}>
+        <span>Studieprojekt</span> · ingen tilknytning til Shawarma King
+      </p>
+      <header className={styles.topbar}>
+        <Link className={styles.back} href="/kurv" aria-label="Tilbage til kurven">
+          ←
+        </Link>
+        <h1>Til kassen</h1>
       </header>
       <main className={styles.content}>
-        <h1>Til kassen</h1>
         <CheckoutForm />
       </main>
     </div>
