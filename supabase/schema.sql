@@ -54,3 +54,23 @@ insert into public.products (id, name, description, price, category, image, feat
 
 -- Wide banner photo on the product page (02 Vælg din mad). Others fall back to image.
 update public.products set banner = '/menu/durum-rulle-banner.webp' where id = 'durum-rulle';
+
+-- Restaurant status (09 Travlt / Pause). One row; set paused = true to stop new orders.
+create table if not exists public.restaurant_status (
+  id     integer primary key default 1 check (id = 1),  -- only one row
+  paused boolean not null default false
+);
+
+alter table public.restaurant_status enable row level security;
+
+grant select on public.restaurant_status to anon, authenticated;
+
+drop policy if exists "Status kan læses af alle" on public.restaurant_status;
+create policy "Status kan læses af alle"
+  on public.restaurant_status
+  for select
+  to anon, authenticated
+  using (true);
+
+insert into public.restaurant_status (id, paused) values (1, false)
+  on conflict (id) do nothing;

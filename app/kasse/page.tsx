@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import BusyNotice from "../menu/busy-notice";
+import { isOrderingPaused } from "../menu/data";
 import menuStyles from "../menu/menu.module.css";
 import CheckoutForm from "./checkout-form";
 import styles from "./checkout.module.css";
@@ -19,8 +22,16 @@ export default function CheckoutPage() {
         <h1>Til kassen</h1>
       </header>
       <main className={styles.content}>
-        <CheckoutForm />
+        <Suspense fallback={null}>
+          <CheckoutOrBusy />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+// 09 Travlt / Pause: no new orders while the restaurant has paused ordering.
+async function CheckoutOrBusy() {
+  if (await isOrderingPaused()) return <BusyNotice />;
+  return <CheckoutForm />;
 }

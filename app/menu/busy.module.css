@@ -1,0 +1,112 @@
+/* 09 Travlt / Pause (Figma) */
+
+.busy {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 350 / 140;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+/* .busy prefix so the menu page's own heading style (.content h1) can't add extra space */
+.busy .title {
+  max-width: none;
+  margin: 14px 0 0;
+  color: #f3e6d0;
+  font-size: 1.75rem;
+  line-height: 32px;
+}
+
+.text {
+  margin: 17px 0 0;
+  color: #c2ad95;
+  font-size: 0.8125rem;
+  line-height: 18px;
+}
+
+.paused {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  margin-top: 25px;
+  padding: 0 17px;
+  border-radius: 18px;
+  background: #2a0707;
+}
+
+.paused > span:last-child {
+  display: grid;
+  gap: 4px;
+}
+
+.paused strong {
+  color: #f3e6d0;
+  font-size: 0.875rem;
+}
+
+.paused > span:last-child > span {
+  color: #c2ad95;
+  font-size: 0.6875rem;
+}
+
+.icon {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #f6a945;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 700;
+  place-items: center;
+}
+
+.primary,
+.secondary {
+  display: grid;
+  min-height: 56px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  place-items: center;
+  text-decoration: none;
+}
+
+.primary {
+  margin-top: 22px;
+  border: 0;
+  background: #f6cf45;
+  color: #000;
+}
+
+.primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.soon {
+  margin: 8px 0 0;
+  color: #c2ad95;
+  font-size: 0.6875rem;
+  text-align: center;
+}
+
+.secondary {
+  margin-top: 12px;
+  border: 1.5px solid #f3e6d0;
+  color: #f3e6d0;
+}
+
+.secondary:focus-visible {
+  outline: 2px solid #f6cf45;
+  outline-offset: 3px;
+}

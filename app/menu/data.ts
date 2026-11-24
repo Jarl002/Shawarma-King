@@ -45,3 +45,26 @@ export async function getProduct(id: string) {
   const catalog = await getCatalog();
   return catalog.find((product) => product.id === id);
 }
+
+// 09 Travlt / Pause: the restaurant can stop new orders by setting paused = true in Supabase.
+// If the status cannot be read (e.g. the table does not exist yet), ordering stays open.
+export async function isOrderingPaused(): Promise<boolean> {
+  "use cache";
+  cacheLife("seconds");
+
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) return false;
+
+  try {
+    const response = await fetch(`${url}/rest/v1/restaurant_status?select=paused&id=eq.1`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    if (!response.ok) return false;
+    const rows: { paused: boolean }[] = await response.json();
+    return rows[0]?.paused ?? false;
+  } catch {
+    return false;
+  }
+}
+
