@@ -12,6 +12,7 @@ export type CartItem = {
 
 export type Order = {
   number: number;
+  placedAt: number;
   readyAt: number;
   method: "Afhentning" | "Levering";
   items: CartItem[];
@@ -53,6 +54,7 @@ function useCartState() {
     // Gem et øjebliksbillede, så senere kurvændringer ikke ændrer bestillingen.
     setOrder({
       number: Math.floor(Math.random() * 900) + 100,
+      placedAt: Date.now(),
       readyAt: Date.now() + minutes * 60_000,
       method,
       totalInOre,

@@ -2,75 +2,70 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { itemKey, useCart } from "../cart";
+import { useCart } from "../cart";
 import styles from "./waiting.module.css";
 
-const steps = [
-  "Bestilling modtaget",
-  "Kødet skæres frisk af spyddet",
-  "Brødet varmes og rulles",
-  "Klar ved disken",
-];
+const steps = ["Bestilling modtaget", "Din mad laves nu", "Klar ved disken"];
+
+function clock(time: number) {
+  const date = new Date(time);
+  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+}
 
 export default function OrderStatus() {
   const { order } = useCart();
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    const update = () => setNow(Date.now());
+    update();
+    const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
   }, []);
 
   if (!order) {
     return (
       <main className={styles.content}>
-        <h1>Ingen aktiv bestilling</h1>
-        <Link href="/menu">Se menuen</Link>
+        <Link className={styles.emptyCard} href="/menu">
+          <strong>Ingen aktiv bestilling</strong>
+          <span>Tryk her for at vælge mad fra menuen</span>
+        </Link>
       </main>
     );
   }
 
-  const minutesLeft = Math.max(0, Math.ceil((order.readyAt - (now ?? order.readyAt)) / 60_000));
-  const readyTime = new Intl.DateTimeFormat("da-DK", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Europe/Copenhagen",
-  }).format(order.readyAt);
+  // The steps follow the clock: received right away, cooking after a minute, ready at the estimated time.
+  const current = now === null ? 0 : now >= order.readyAt ? 2 : now - order.placedAt >= 60_000 ? 1 : 0;
+  const pickup = order.method === "Afhentning";
 
   return (
     <main className={styles.content}>
-      <h1 className={styles.title}>Din bestilling er modtaget</h1>
-      <div className={styles.ticket}>
-        <div><span>Klar ca.</span><strong>{readyTime}</strong></div>
-        <div><span>Ordrenummer</span><strong>#{order.number}</strong></div>
-        <p>{order.method} · {order.method === "Afhentning" ? "Immervad 1E" : "Til den valgte adresse"}</p>
+      <h1 className={styles.visuallyHidden}>Din bestilling er modtaget</h1>
+      <div className={styles.card}>
+        <div>
+          <span>Klar ca.</span>
+          <strong className={styles.time}>{clock(order.readyAt)}</strong>
+        </div>
+        <div className={styles.number}>
+          <span>Ordrenummer</span>
+          <strong>#{order.number}</strong>
+        </div>
+        <p>{pickup ? "Afhentning · Immervad 1E" : "Levering til den valgte adresse"}</p>
       </div>
-      <p className={styles.remaining} role="timer">
-        {now === null ? "Beregner ventetid…" : minutesLeft > 0 ? `ca. ${minutesLeft} minutter tilbage` : "Det forventede tidspunkt er nået"}
-      </p>
-      <Link href="/bestilling-klar">Vis færdigskærmen (demo)</Link>
-      <h2>Sådan laver vi din mad</h2>
-      <ol className={styles.steps}>
+
+      <p className={styles.lead}>Vi giver besked, når din mad er klar.</p>
+
+      <h2 className={styles.stepsTitle}>Sådan laver vi din mad</h2>
+      <ol className={styles.steps} aria-live="polite">
         {steps.map((step, index) => (
-          <li key={step} className={index === 0 ? styles.received : undefined}>
-            <span aria-hidden="true">{index === 0 ? "✹" : "◇"}</span>
+          <li key={step} data-state={index < current ? "done" : index === current ? "current" : "todo"} aria-current={index === current ? "step" : undefined}>
             {step}
           </li>
         ))}
       </ol>
-      <p className={styles.note}>Tiden er et estimat. Denne studiedemo viser en simuleret bestilling.</p>
-      <details className={styles.summary}>
-        <summary>Se din bestilling</summary>
-        <ul>
-          {order.items.map((item) => (
-            <li key={itemKey(item)}>
-              {item.quantity} × {item.name}
-              {item.choices.length > 0 && <small>{item.choices.join(" · ")}</small>}
-            </li>
-          ))}
-        </ul>
-        <strong>I alt {(order.totalInOre / 100).toLocaleString("da-DK", { minimumFractionDigits: 2 })} kr.</strong>
-      </details>
+
+      <p className={styles.note}>Tiden er et estimat. Vi giver besked, når maden er klar.</p>
+      <Link className={styles.demo} href="/bestilling-klar">Vis færdigskærmen (demo)</Link>
     </main>
   );
 }
