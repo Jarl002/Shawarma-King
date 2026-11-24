@@ -16,6 +16,8 @@ export type Order = {
   method: "Afhentning" | "Levering";
   items: CartItem[];
   totalInOre: number;
+  cutlery: boolean;
+  note: string;
 };
 
 export function itemKey(item: CartItem) {
@@ -25,6 +27,8 @@ export function itemKey(item: CartItem) {
 function useCartState() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [order, setOrder] = useState<Order | null>(null);
+  const [cutlery, setCutlery] = useState(false);
+  const [note, setNote] = useState("");
 
   function addItem(item: CartItem) {
     setItems((current) => {
@@ -53,18 +57,22 @@ function useCartState() {
       method,
       totalInOre,
       items: items.map((item) => ({ ...item, choices: [...item.choices] })),
+      cutlery,
+      note,
     });
-    setItems([]);
+    clearCart();
   }
 
   function clearCart() {
     setItems([]);
+    setCutlery(false);
+    setNote("");
   }
 
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
   const total = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
 
-  return { items, count, total, addItem, changeQuantity, clearCart, order, placeOrder };
+  return { items, count, total, addItem, changeQuantity, clearCart, order, placeOrder, cutlery, setCutlery, note, setNote };
 }
 
 const CartContext = createContext<ReturnType<typeof useCartState> | null>(null);
